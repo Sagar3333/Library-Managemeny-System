@@ -24,7 +24,7 @@ namespace Library_Management_System_MVC.Controllers
         public ActionResult Index()
         {
             var model = new viewLandingPage();
-            HttpResponseMessage reponse = client.GetAsync(client.BaseAddress + "/LandingPage").Result;
+            HttpResponseMessage reponse = client.GetAsync(client.BaseAddress + "/landingPage").Result;
             if (reponse.IsSuccessStatusCode)
             {
                 string data = reponse.Content.ReadAsStringAsync().Result;

@@ -19,19 +19,25 @@ namespace LMS_WebAPI.Controllers
         {
             //Sending user data to MSSQL database
             Database db = DatabaseFactory.CreateDatabase();
-            DbCommand dbCommandWrapper = db.GetStoredProcCommand("AddBookData");
-            //db.AddInParameter(dbCommandWrapper, "@Id", DbType.Int32, bookModel.id);
+            DbCommand dbCommandWrapper = db.GetStoredProcCommand("addUser");
 
-            //db.AddInParameter(dbCommandWrapper, "@Title", DbType.String, registration.title);
-            //db.AddInParameter(dbCommandWrapper, "@Publisher", DbType.String, registration.publisher);
-            //db.AddInParameter(dbCommandWrapper, "@Writer", DbType.String, registration.writer);
-            //db.AddInParameter(dbCommandWrapper, "@ISBN_Number", DbType.Int64, registration.ISBN_number);
-            //db.AddInParameter(dbCommandWrapper, "@Selling_Price", DbType.Int32, registration.selling_price);
-            //db.AddInParameter(dbCommandWrapper, "@Renting_Price", DbType.Int32, registration.renting_price);
-            //db.AddInParameter(dbCommandWrapper, "@Is_Rentable", DbType.Boolean, registration.is_rentable);
-            //db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.binding_type);
-            //var id = db.ExecuteScalar(dbCommandWrapper);
-            //registration.id = Convert.ToInt32(id);
+            db.AddInParameter(dbCommandWrapper, "@Publisher", DbType.String, registration.name);
+            db.AddInParameter(dbCommandWrapper, "@Writer", DbType.String, registration.email);
+            db.AddInParameter(dbCommandWrapper, "@ISBN_Number", DbType.Int64, registration.phone);
+            db.AddInParameter(dbCommandWrapper, "@Selling_Price", DbType.Int32, registration.fathersName);
+            db.AddInParameter(dbCommandWrapper, "@Renting_Price", DbType.Int32, registration.gender);
+            db.AddInParameter(dbCommandWrapper, "@Is_Rentable", DbType.Boolean, registration.governmentIdType);
+            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.governmentId);
+            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.dob);
+            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.address1);
+            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.address2);
+            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.city);
+            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.state);
+            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.pin);
+            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.password);
+            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.isAdmin);
+            var id = db.ExecuteScalar(dbCommandWrapper);
+            registration.id = Convert.ToInt32(id);
 
             return Created(new Uri(Request.RequestUri + "/" + registration.id), registration);
         }
