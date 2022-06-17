@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library Management System MVC", "Library Management System MVC.csproj", "{454E0133-A26F-4B5B-9FE6-C00DA37AAFE6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS WebAPI", "..\LMS WebAPI\LMS WebAPI.csproj", "{015C10E9-8030-44FE-8270-9F53398A58F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{454E0133-A26F-4B5B-9FE6-C00DA37AAFE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{454E0133-A26F-4B5B-9FE6-C00DA37AAFE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{454E0133-A26F-4B5B-9FE6-C00DA37AAFE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{454E0133-A26F-4B5B-9FE6-C00DA37AAFE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{015C10E9-8030-44FE-8270-9F53398A58F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{015C10E9-8030-44FE-8270-9F53398A58F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{015C10E9-8030-44FE-8270-9F53398A58F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{015C10E9-8030-44FE-8270-9F53398A58F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14FE3CAF-F534-487E-891B-5EE6308583FB}
+	EndGlobalSection
+EndGlobal
