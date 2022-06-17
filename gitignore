@@ -57,3 +57,6 @@ DBS.ExamOnline.Admin/fonts/arial-unicode-ms.ttf
 /packages
 /.vs
 /DBS.ExamOnline.Admin/App_Custom/Document/Examinee
+
+# by me
+Web.config
