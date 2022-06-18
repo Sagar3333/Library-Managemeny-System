@@ -13,6 +13,13 @@ namespace LMS_WebAPI.Controllers
 {
     public class registrationController : ApiController
     {
+        //public IHttpActionResult CreateBook()
+        //{
+        //    ViewBag.Title = "Home Page";
+
+        //    return View();
+        //}
+
         [Route("api/registrationPage")]
         [HttpPost]
         public IHttpActionResult CreateBook(registration registration)
@@ -21,21 +28,21 @@ namespace LMS_WebAPI.Controllers
             Database db = DatabaseFactory.CreateDatabase();
             DbCommand dbCommandWrapper = db.GetStoredProcCommand("addUser");
 
-            db.AddInParameter(dbCommandWrapper, "@Publisher", DbType.String, registration.name);
-            db.AddInParameter(dbCommandWrapper, "@Writer", DbType.String, registration.email);
-            db.AddInParameter(dbCommandWrapper, "@ISBN_Number", DbType.Int64, registration.phone);
-            db.AddInParameter(dbCommandWrapper, "@Selling_Price", DbType.Int32, registration.fathersName);
-            db.AddInParameter(dbCommandWrapper, "@Renting_Price", DbType.Int32, registration.gender);
-            db.AddInParameter(dbCommandWrapper, "@Is_Rentable", DbType.Boolean, registration.governmentIdType);
-            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.governmentId);
-            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.dob);
-            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.address1);
-            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.address2);
-            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.city);
-            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.state);
-            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.pin);
-            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.password);
-            db.AddInParameter(dbCommandWrapper, "@Binding_Type", DbType.Int32, registration.isAdmin);
+            db.AddInParameter(dbCommandWrapper, "@name", DbType.String, registration.name);
+            db.AddInParameter(dbCommandWrapper, "@email", DbType.String, registration.email);
+            db.AddInParameter(dbCommandWrapper, "@phone", DbType.String, registration.phone);
+            db.AddInParameter(dbCommandWrapper, "@fathersName", DbType.String, registration.fathersName);
+            db.AddInParameter(dbCommandWrapper, "@gender", DbType.Boolean, registration.gender);
+            db.AddInParameter(dbCommandWrapper, "@governmentIdType", DbType.Int32, registration.governmentIdType);
+            db.AddInParameter(dbCommandWrapper, "@governmentId", DbType.String, registration.governmentId);
+            db.AddInParameter(dbCommandWrapper, "@dob", DbType.Date, registration.dob);
+            db.AddInParameter(dbCommandWrapper, "@address1", DbType.String, registration.address1);
+            db.AddInParameter(dbCommandWrapper, "@address2", DbType.String, registration.address2);
+            db.AddInParameter(dbCommandWrapper, "@city", DbType.String, registration.city);
+            db.AddInParameter(dbCommandWrapper, "@state", DbType.String, registration.state);
+            db.AddInParameter(dbCommandWrapper, "@pin", DbType.String, registration.pin);
+            db.AddInParameter(dbCommandWrapper, "@password", DbType.Byte, registration.password);
+            db.AddInParameter(dbCommandWrapper, "@isAdmin", DbType.Boolean, registration.isAdmin);
             var id = db.ExecuteScalar(dbCommandWrapper);
             registration.id = Convert.ToInt32(id);
 
