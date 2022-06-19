@@ -5,21 +5,14 @@
 }
 
 <!DOCTYPE html>
-
+<style>
+    .selectBook:hover {
+        cursor: pointer;
+        background-color: #245884;
+    }
+</style>
 <div class="container">
     <div class="row">
-        <div class="col-lg-12" style="display: flex; justify-content: flex-end">
-            <button style="margin: 6px">Home</button>
-            <button style="margin: 6px">About Us</button>
-            <button style="margin: 6px">Login</button>
-            <a style="margin: 6px" href="../registration/Index">Register</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-9"><img src="\Content\Images\libraryCoverPhoto.jpg" style="height: 378px;" /></div>
-        <div class="col-lg-3" style="height: 378px; display: flex; align-items: flex-end; justify-content: center; ">
-            <input type="text" placeholder="Movie Name" />
-        </div>
         <p></p>
         @{
             foreach (var kvpair in Model.Dict)
@@ -31,15 +24,19 @@
                 }
                 else
                 {
-                    <h1>Top books (in category @kvpair.Key):</h1>
+                    <h1>@kvpair.Key:</h1>
                 }
                 <p></p>
-                <div class="row img-rounded bg-info justify-content-center h-100">
+                <div class="row img-rounded bg-info h-100" style="display:flex;">
                     @{ foreach (var item in kvpair.Value)
                         {
-                            <div class="col-lg-2">
-                                <p>Book Name: @item.bookTitle</p>
-                                <p>Book Rating: @item.rating</p>
+                            <div class="col-lg-2 img-rounded bg-primary selectBook" style="margin: 6px 6px 6px 6px" onclick="location.href='@Url.Action("aboutBook", "landingPage", new { id = item.id })'">
+                                <p><strong>Book: </strong>@item.bookTitle</p>
+                                <p><strong>Rating: </strong>@item.rating</p>
+                                @if (kvpair.Key == "%[a-z]%")
+                                {
+                                    <p><strong>Genre: </strong>@item.genre</p>
+                                }
                             </div>
                         }
                     }

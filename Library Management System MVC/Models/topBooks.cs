@@ -9,6 +9,10 @@ namespace Library_Management_System_MVC.Models
     {
         public decimal rating { get; set; }
         public string bookTitle { get; set; }
-        public int rank { get; set; }
+        public int id { get; set; }
+        public string genre { get; set; }
+        public string publisher { get; set; }
+        public string writers { get; set; }
+
     }
 }

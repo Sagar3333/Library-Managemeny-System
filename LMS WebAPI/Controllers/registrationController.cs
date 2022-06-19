@@ -22,7 +22,7 @@ namespace LMS_WebAPI.Controllers
 
         [Route("api/registrationPage")]
         [HttpPost]
-        public IHttpActionResult CreateBook(registration registration)
+        public IHttpActionResult Index(registration registration)
         {
             //Sending user data to MSSQL database
             Database db = DatabaseFactory.CreateDatabase();
@@ -46,6 +46,7 @@ namespace LMS_WebAPI.Controllers
             var id = db.ExecuteScalar(dbCommandWrapper);
             registration.id = Convert.ToInt32(id);
 
+            //return RedirectToRoute(new { controller = "login", action = "Index" });
             return Created(new Uri(Request.RequestUri + "/" + registration.id), registration);
         }
     }

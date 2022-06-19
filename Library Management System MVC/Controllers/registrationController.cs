@@ -84,7 +84,7 @@ namespace Library_Management_System_MVC.Controllers
                 if (result.IsSuccessStatusCode)
                 {
                     //return View(registration);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "login");
                 }
             }
 

@@ -32,5 +32,16 @@ namespace Library_Management_System_MVC.Controllers
             }
             return View(model);
         }
+        public ActionResult aboutBook(int id)
+        {
+            var model = new topBooks();
+            HttpResponseMessage reponse = client.GetAsync(client.BaseAddress + "/aboutBook/" + id).Result;
+            if (reponse.IsSuccessStatusCode)
+            {
+                string data = reponse.Content.ReadAsStringAsync().Result;
+                model = JsonConvert.DeserializeObject<topBooks>(data);
+            }
+            return View(model);
+        }
     }
 }
