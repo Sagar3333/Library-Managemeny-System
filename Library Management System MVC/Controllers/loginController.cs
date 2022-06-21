@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace Library_Management_System_MVC.Controllers
@@ -12,8 +13,8 @@ namespace Library_Management_System_MVC.Controllers
     public class loginController : Controller
     {
         // GET: login
-        Uri baseAddress = new Uri("https://localhost:44340/api");
         HttpClient client;
+        Uri baseAddress = new Uri(WebConfigurationManager.AppSettings["apibaseurl"]);
         public loginController()
         {
             client = new HttpClient();
@@ -44,42 +45,42 @@ namespace Library_Management_System_MVC.Controllers
             }
             return View(model);
         }
-        [HttpPost]
-        public ActionResult Index(login login)
-        {
-            return RedirectToAction("Index", login);
-        }
-
         //[HttpPost]
         //public ActionResult Index(login login)
         //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri("https://localhost:44340/api/login");
-
-        //        //HTTP POST
-        //        var postTask = client.PostAsJsonAsync<login>("login", login);
-        //        postTask.Wait();
-
-        //        var result = postTask.Result;
-        //        if (result.IsSuccessStatusCode)
-        //        {
-        //            return Redirect(
-        //                Url.RouteUrl("DefaultApi",
-        //        new
-        //        {
-        //            httproute = "",
-        //            controller = "login",
-        //            action = "AuthenticateUser",
-        //            id = login.email,
-        //            id2 = login.password
-        //        }));
-        //        }
-        //    }
-
-        //    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
-
-        //    return View(login);
+        //    return RedirectToAction("Index", login);
         //}
+
+        [HttpPost]
+        public ActionResult Index(login login)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44340/api/login");
+
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync<login>("login", login);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return Redirect(
+                        Url.RouteUrl("DefaultApi",
+                    new
+                    {
+                        httproute = "",
+                        controller = "login",
+                        action = "AuthenticateUser",
+                        id = login.email,
+                        id2 = login.password
+                    }));
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+
+            return View(login);
+        }
     }
 }

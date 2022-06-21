@@ -29,7 +29,7 @@ namespace Library_Management_System_MVC.Models
         public string state { get; set; }
         public string pin { get; set; }
         [DisplayName("Password:")]
-        public Byte password { get; set; }
+        public string password { get; set; }
         public Byte confirmPwd { get; set; }
         public Boolean isAdmin { get; set; }
         public IEnumerable<SelectListItem> isAdmins { get; set; }

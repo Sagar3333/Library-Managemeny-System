@@ -28,7 +28,7 @@ namespace LMS_WebAPI.Controllers
                 }));
         }
 
-        [Route("api/AuthenticateUser")]
+        [Route("api/AuthenticateUser/{id}/{id2}")]
         [HttpGet]
         public string AuthenticateUser([FromUri] string id, [FromUri] byte id2)
         {
