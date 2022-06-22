@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace Library_Management_System_MVC.Controllers
 {
-    public class userController : Controller
+    public class forgotPasswordController : Controller
     {
-        // GET: user
-        public ActionResult Index(string email)
+        // GET: forgotPassword
+        public ActionResult Index()
         {
             return View();
         }
