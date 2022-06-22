@@ -28,7 +28,7 @@ namespace Library_Management_System_MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(login login)
+        public ActionResult Index(login login, string email)
         {
             using (var client = new HttpClient())
             {
@@ -51,11 +51,11 @@ namespace Library_Management_System_MVC.Controllers
                     }
                     else if (loginStatus == "True")
                     {
-                        return RedirectToAction("Index", "admin");
+                        return RedirectToAction("Index", "admin", email);
                     }
                     else if (loginStatus == "False")
                     {
-                        return RedirectToAction("Index", "user");
+                        return RedirectToAction("Index", "user", email);
                     }
                 }
             }

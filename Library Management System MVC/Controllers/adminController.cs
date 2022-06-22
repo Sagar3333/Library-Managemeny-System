@@ -9,7 +9,7 @@ namespace Library_Management_System_MVC.Controllers
     public class adminController : Controller
     {
         // GET: admin
-        public ActionResult Index()
+        public ActionResult Index(string email)
         {
             return View();
         }
