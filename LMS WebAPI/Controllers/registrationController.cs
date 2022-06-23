@@ -41,7 +41,7 @@ namespace LMS_WebAPI.Controllers
             db.AddInParameter(dbCommandWrapper, "@city", DbType.String, registration.city);
             db.AddInParameter(dbCommandWrapper, "@state", DbType.String, registration.state);
             db.AddInParameter(dbCommandWrapper, "@pin", DbType.String, registration.pin);
-            db.AddInParameter(dbCommandWrapper, "@password", DbType.Byte, registration.password);
+            db.AddInParameter(dbCommandWrapper, "@password", DbType.String, registration.password);
             db.AddInParameter(dbCommandWrapper, "@isAdmin", DbType.Boolean, registration.isAdmin);
             var id = db.ExecuteScalar(dbCommandWrapper);
             registration.id = Convert.ToInt32(id);

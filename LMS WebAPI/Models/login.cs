@@ -9,6 +9,6 @@ namespace LMS_WebAPI.Models
     {
         public int id { get; set; }
         public string email { get; set; }
-        public byte password { get; set; }
+        public string password { get; set; }
     }
 }

@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace Library_Management_System_MVC.Controllers
 {
-    public class userController : Controller
+    public class adminController : Controller
     {
-        // GET: user
+        // GET: admin
         public ActionResult Index(string email)
         {
             return View();

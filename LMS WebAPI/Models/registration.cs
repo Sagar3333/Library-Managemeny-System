@@ -21,7 +21,7 @@ namespace LMS_WebAPI.Models
         public string city { get; set; }
         public string state { get; set; }
         public string pin { get; set; }
-        public Byte password { get; set; }
+        public string password { get; set; }
         public Boolean isAdmin { get; set; }
     }
 }

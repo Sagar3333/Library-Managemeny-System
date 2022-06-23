@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace Library_Management_System_MVC.Controllers
@@ -12,8 +13,8 @@ namespace Library_Management_System_MVC.Controllers
     public class loginController : Controller
     {
         // GET: login
-        Uri baseAddress = new Uri("https://localhost:44340/api");
         HttpClient client;
+        Uri baseAddress = new Uri(WebConfigurationManager.AppSettings["apibaseurl"]);
         public loginController()
         {
             client = new HttpClient();
@@ -23,63 +24,45 @@ namespace Library_Management_System_MVC.Controllers
         public ActionResult Index()
         {
             var model = new login();
-            string loginStatus = "you are not registered";
-            HttpResponseMessage reponse = client.GetAsync(client.BaseAddress + "/AuthenticateUser").Result;
-            if (reponse.IsSuccessStatusCode)
-            {
-                string data = reponse.Content.ReadAsStringAsync().Result;
-                loginStatus = JsonConvert.DeserializeObject<string>(data);
-            }
-            if (loginStatus == "")
-            {
-                model.loginStatus = loginStatus;
-            }
-            else if (loginStatus == "password is incorrect")
-            {
-                model.loginStatus = loginStatus;
-            }
-            else if (loginStatus == "login successfull")
-            {
-                return RedirectToAction("Index", "user");
-            }
             return View(model);
         }
+
         [HttpPost]
-        public ActionResult Index(login login)
+        public ActionResult Index(login login, string email)
         {
-            return RedirectToAction("Index", login);
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:44340/api/login");
+
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync<login>("login", login);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    string data = result.Content.ReadAsStringAsync().Result;
+                    var loginStatus = JsonConvert.DeserializeObject<string>(data);
+
+                    if (loginStatus == "you are not registered" || loginStatus == "password is incorrect")
+                    {
+                        login.loginStatus = loginStatus;
+                        return View(login);
+                    }
+                    else if (loginStatus == "True")
+                    {
+                        return RedirectToAction("Index", "admin", email);
+                    }
+                    else if (loginStatus == "False")
+                    {
+                        return RedirectToAction("Index", "user", email);
+                    }
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+
+            return View(login);
         }
-
-        //[HttpPost]
-        //public ActionResult Index(login login)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri("https://localhost:44340/api/login");
-
-        //        //HTTP POST
-        //        var postTask = client.PostAsJsonAsync<login>("login", login);
-        //        postTask.Wait();
-
-        //        var result = postTask.Result;
-        //        if (result.IsSuccessStatusCode)
-        //        {
-        //            return Redirect(
-        //                Url.RouteUrl("DefaultApi",
-        //        new
-        //        {
-        //            httproute = "",
-        //            controller = "login",
-        //            action = "AuthenticateUser",
-        //            id = login.email,
-        //            id2 = login.password
-        //        }));
-        //        }
-        //    }
-
-        //    ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
-
-        //    return View(login);
-        //}
     }
 }

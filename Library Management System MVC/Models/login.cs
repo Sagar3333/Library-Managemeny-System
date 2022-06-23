@@ -9,6 +9,6 @@ namespace Library_Management_System_MVC.Models
     {
         public string loginStatus { get; set; }
         public string email { get; set; }
-        public Byte password { get; set; }
+        public string password { get; set; }
     }
 }

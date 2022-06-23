@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-@using (Html.BeginForm("Index", "login", FormMethod.Post))
+@using (Html.BeginForm("Index", "login", FormMethod.Post, Model.email))
 {
     <div class="container" style="margin-top: 30px; display: flex; justify-content: center;">
         <div class="row">
@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-md-12" style="margin-bottom: 12px; margin-left: 97px">
                                 <button>Forgot Password?</button>
-                                <input type="submit" value="Login" />
+                                <input type="submit" value="Login"/>
                             </div>
                         </div>
                         <div class="row">
@@ -37,6 +37,7 @@
                                 <input type="button" value="Register" onclick="location.href='@Url.Action("Index", "registration")'" />
                             </div>
                         </div>
+                        <p></p>
                         <div class="row">
                             <div class="col-md-12" id="loginStatus" style="display:none; background-color:brown; color:white">
                                 message: @Model.loginStatus
@@ -52,6 +53,6 @@
     var loginStatus = document.getElementById("loginStatus");
 
     if ("@Model.loginStatus" != "") {
-            loginStatus.style.display = "inline";
-        }
+        loginStatus.style.display = "inline";
+    }
 </script>

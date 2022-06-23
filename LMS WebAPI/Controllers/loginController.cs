@@ -14,42 +14,51 @@ namespace LMS_WebAPI.Controllers
     {
         [Route("api/login")]
         [HttpPost]
-        public IHttpActionResult Index(login login)
+        public /*IHttpActionResult*/ string AuthenticateUser(login login)
         {
-            return Redirect(
-            Url.Link("DefaultApi",
-                new
-                {
-                    httproute = "",
-                    controller = "login",
-                    action = "AuthenticateUser",
-                    id = login.email,
-                    id2 = login.password
-                }));
-        }
-
-        [Route("api/AuthenticateUser")]
-        [HttpGet]
-        public string AuthenticateUser([FromUri] string id, [FromUri] byte id2)
-        {
+            var email = login.email;
+            var password = login.password;
+            Boolean isAdmin;
+            var loginStatus = "";
             Database db = DatabaseFactory.CreateDatabase();
 
-            DbCommand dbCommandWrapperEmail = db.GetSqlStringCommand("select email, [password] from [user] where email = '" + id + "'");
-            DbCommand dbCommandWrapperEmailAndPassword = db.GetSqlStringCommand("select email, [password] from [user] where email = '" + id + "' and [password] = " + id2);
+            DbCommand dbCommandWrapperEmail = db.GetSqlStringCommand("select email from [user] where email = '" + email + "'");
+            DbCommand dbCommandWrapperEmail_Password_isAdmin = db.GetSqlStringCommand("select email, [password], isAdmin from [user] where email = '" + email + "' and [password] = ISNULL(CONVERT(varbinary(256), '" + password + "'), 0x);");
             var dsEmail = db.ExecuteDataSet(dbCommandWrapperEmail);
-            var dsEmailAndPassword = db.ExecuteDataSet(dbCommandWrapperEmailAndPassword);
+            var dsEmail_Password_IsAdmin = db.ExecuteDataSet(dbCommandWrapperEmail_Password_isAdmin);
+            try
+            {
+                Convert.ToString(dsEmail.Tables[0].Rows[0]["email"]);
+            }
+            catch (System.IndexOutOfRangeException)
+            {
+                loginStatus = "you are not registered";
+            }
+            if (loginStatus != "you are not registered")
+            {
+                try
+                {
+                    Convert.ToString(dsEmail_Password_IsAdmin.Tables[0].Rows[0]["email"]);
+                }
+                catch (System.IndexOutOfRangeException)
+                {
+                    loginStatus = "password is incorrect";
+                }
+            }
+            
 
-            if (dsEmail == null)
+            if (loginStatus == "you are not registered")
             {
                 return "you are not registered";
             }
-            else if (dsEmailAndPassword == null)
+            else if (loginStatus == "password is incorrect")
             {
                 return "password is incorrect";
             }
             else
             {
-                return "login successfull";
+                isAdmin = Convert.ToBoolean(dsEmail_Password_IsAdmin.Tables[0].Rows[0]["isAdmin"]);
+                return isAdmin.ToString();
             }
         }
     }

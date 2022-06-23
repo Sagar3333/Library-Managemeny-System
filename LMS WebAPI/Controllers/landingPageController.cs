@@ -16,13 +16,22 @@ namespace LMS_WebAPI.Controllers
         [HttpGet]
         public Dictionary<string, List<topBooks>> Index()
         {
-            var GenreList = new List<string> { "%[a-z]%", "Novel", "Southern Gothic fiction", "education", "Fantasy" };
+            var GenreList = new List<string> { "%[a-z]%" };
+
+            Database db = DatabaseFactory.CreateDatabase();
+            DbCommand dbCommandWrapperGeneres = db.GetSqlStringCommand("select DISTINCT genre from bookMaster;");
+            var dsGeneres = db.ExecuteDataSet(dbCommandWrapperGeneres);
+            for (var i = 0; i < dsGeneres.Tables[0].Rows.Count; i++)
+            {
+                GenreList.Add(Convert.ToString(dsGeneres.Tables[0].Rows[i]["genre"]));
+            };
+            
             var topBooksForEachGenreDict = new Dictionary<string, List<topBooks>>();
             var numberOfBooksToShow = 6;
             foreach (var Genre in GenreList)
             {
                 //getting all Top books
-                Database db = DatabaseFactory.CreateDatabase();
+                //Database db = DatabaseFactory.CreateDatabase();
                 DbCommand dbCommandWrapper = db.GetSqlStringCommand("select top " + numberOfBooksToShow + " bookMaster.id, bookMaster.bookTitle, bookMaster.genre, readersReview.rating from readersReview inner join bookMaster on readersReview.bookMasterId = bookMaster.id where bookMaster.genre LIKE '" + Genre + "' ORDER BY rating DESC;");
                 var ds = db.ExecuteDataSet(dbCommandWrapper);
                 List<topBooks> topBooks = new List<topBooks>();
