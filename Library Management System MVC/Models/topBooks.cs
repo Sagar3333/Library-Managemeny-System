@@ -13,6 +13,7 @@ namespace Library_Management_System_MVC.Models
         public string genre { get; set; }
         public string publisher { get; set; }
         public string writers { get; set; }
+       
 
     }
 }
