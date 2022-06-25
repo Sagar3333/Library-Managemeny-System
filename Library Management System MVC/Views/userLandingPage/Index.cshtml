@@ -1,0 +1,64 @@
+﻿@model Library_Management_System_MVC.viewModel.viewUserLandingPage
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+<style>
+    .selectBook:hover {
+        cursor: pointer;
+        background-color: #245884;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <p></p>
+        @{
+            foreach (var kvpair in Model.topBooksDict)
+            {
+                <p></p>
+                if (kvpair.Key == "%[a-z]%")
+                {
+                    <h1>Top books:</h1>
+                }
+                else
+                {
+                    <h1>@kvpair.Key:</h1>
+                }
+                <p></p>
+                <div class="row img-rounded bg-info h-100" style="display:flex;">
+                    @{ foreach (var item in kvpair.Value)
+                        {
+                            <div class="col-lg-2 img-rounded bg-primary selectBook" style="margin: 6px 6px 6px 6px" onclick="location.href='@Url.Action("aboutBook", "landingPage", new { id = item.id })'">
+                                <p><strong>Book: </strong>@item.bookTitle</p>
+                                <p><strong>Rating: </strong>@item.rating</p>
+
+                                @if (kvpair.Key == "%[a-z]%")
+                                {
+                                    <p><strong>Genre: </strong>@item.genre</p>
+                                }
+
+                                @*<div class="col-lg-2 img-rounded bg-primary selectBook" style="margin: 6px 6px 6px 6px" >
+                                       <button>Add To Cart</button>
+                                    </div>*@
+                            </div>
+                        }
+                    }
+                </div>
+               
+                    <div class="row" style="display:flex;">
+                        @{ foreach (var item in kvpair.Value)
+                            {
+                                <div class="col-lg-2">
+                                    <button class="btn btn-success" type="submit" onclick="location.href='@Url.Action("addToCart", "userLandingPage", new {email = Model.email, id = item.id})'">Add to Cart</button>
+
+                                </div>
+                            }
+                        }
+                    </div>
+               
+            }
+        }
+    </div>
+</div>

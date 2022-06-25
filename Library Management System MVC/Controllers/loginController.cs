@@ -28,8 +28,9 @@ namespace Library_Management_System_MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(login login, string email)
+        public ActionResult Index(login login)
         {
+            string email = login.email;
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44340/api/login");
@@ -55,7 +56,7 @@ namespace Library_Management_System_MVC.Controllers
                     }
                     else if (loginStatus == "False")
                     {
-                        return RedirectToAction("Index", "user", email);
+                        return RedirectToAction("Index", "userLandingPage", new { email = email });
                     }
                 }
             }
