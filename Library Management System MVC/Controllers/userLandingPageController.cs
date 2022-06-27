@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace Library_Management_System_MVC.Controllers
 {
     public class userLandingPageController : Controller
     {
-        Uri baseAddress = new Uri("https://localhost:44340/api");
+        Uri baseAddress = new Uri(WebConfigurationManager.AppSettings["apibaseurl"]);
         HttpClient client;
         public userLandingPageController()
         {
@@ -43,42 +44,42 @@ namespace Library_Management_System_MVC.Controllers
             return View(model);
         }
 
-        //[HttpGet]
-        //public ActionResult addToCart(int id,string email)
+        [HttpGet]
+        public ActionResult addToCart(int id, string email)
+        {
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["apibaseurl"]);
+
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync<string>("addToCart/"+id+"?email="+email, null);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index", "userLandingPage");
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+
+            return View();
+        }
+
+        //public ActionResult addToCart(int id, string email)
         //{
-
-        //using (var client = new HttpClient())
-        //{
-        //    client.BaseAddress = new Uri("https://localhost:44340/api/addToCart/" + id);
-
-        //    //HTTP POST
-        //    var postTask = client.PostAsJsonAsync<string>("addToCart", email);
-        //    postTask.Wait();
-
-        //    var result = postTask.Result;
-        //    if (result.IsSuccessStatusCode)
+        //    string  id2 = email;
+        //    var model = new viewLandingPage();
+        //    HttpResponseMessage reponse = client.GetAsync(client.BaseAddress + "/addToCart/" + id + "/" + id2).Result;
+        //    if (reponse.IsSuccessStatusCode)
         //    {
         //        return RedirectToAction("Index", "userLandingPage");
         //    }
+        //    return RedirectToAction("Index", "userLandingPage");
+
         //}
-
-        //ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
-
-        //return View();
-        //}
-
-        public ActionResult addToCart(int id, string email)
-        {
-            string  id2 = email;
-            var model = new viewLandingPage();
-            HttpResponseMessage reponse = client.GetAsync(client.BaseAddress + "/addToCart/" + id + "/" + id2).Result;
-            if (reponse.IsSuccessStatusCode)
-            {
-                return RedirectToAction("Index", "userLandingPage");
-            }
-            return RedirectToAction("Index", "userLandingPage");
-
-        }
     }
 
 }

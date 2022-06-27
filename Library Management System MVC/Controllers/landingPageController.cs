@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace Library_Management_System_MVC.Controllers
@@ -14,7 +15,7 @@ namespace Library_Management_System_MVC.Controllers
     {
         // GET: landingPage
 
-        Uri baseAddress = new Uri("https://localhost:44340/api");
+        Uri baseAddress = new Uri(WebConfigurationManager.AppSettings["apibaseurl"]);
         HttpClient client;
         public landingPageController()
         {
