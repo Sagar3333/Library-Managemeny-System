@@ -28,7 +28,7 @@ namespace Library_Management_System_MVC.Controllers
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44340/api/registrationPage");
+                client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["apibaseurl"]);
 
                 //HTTP POST
                 var postTask = client.PostAsJsonAsync<registration>("registrationPage", registration);

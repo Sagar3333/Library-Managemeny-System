@@ -33,7 +33,7 @@ namespace Library_Management_System_MVC.Controllers
             string email = login.email;
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:44340/api/login");
+                client.BaseAddress = baseAddress;
 
                 //HTTP POST
                 var postTask = client.PostAsJsonAsync<login>("login", login);

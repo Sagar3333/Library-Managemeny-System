@@ -16,12 +16,12 @@ namespace LMS_WebAPI.Controllers
         //[Route("api/addToCart/{email}")]
         //[HttpPost]
         //public void addToCart(topBooks topBooks, string email)
-        [Route("api/addToCart/{id}/{id2}")]
+        [Route("api/addToCart/{id}")]
         [HttpPost]
-        public string addToCart(string id2, int id)
+        public string addToCart(int id, string email)
         {
             Database db = DatabaseFactory.CreateDatabase();
-            DbCommand dbCommandWrapper = db.GetSqlStringCommand("select email,id from [user] where email = '" + id2 + "'");
+            DbCommand dbCommandWrapper = db.GetSqlStringCommand("select email,id from [user] where email = '" + email + "'");
             var ds = db.ExecuteDataSet(dbCommandWrapper);
             var userId = Convert.ToInt32(ds.Tables[0].Rows[0]["id"]);
 
